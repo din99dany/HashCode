@@ -123,7 +123,7 @@ std::vector<Book> marchez_carti(Library x, int timp_ramas)
     if (zile_scanare < timp_ramas)
     {
         carti_trimise = ship;
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < ship.size(); i++)
         {
             viz[ship[i].m_id] = 1;
         }
