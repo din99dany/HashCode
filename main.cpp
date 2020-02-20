@@ -6,10 +6,14 @@
 #include <vector>
 #include <utility> 
 #include <cstdio>
+#include <cmath>
+#include <random>
+#include <random>
+
 #define NMAX 500001
 std::vector<bool> WasScaned( NMAX, false );
 int viz[NMAX];
-
+int CntBook[NMAX];
 class Book 
 {
 public :
@@ -182,6 +186,7 @@ int main()
         {
             int idToAdd;
             std :: cin >> idToAdd;
+            CntBook[ idToAdd ]++;
             toAddBooks.push_back( books[ idToAdd] );
         }
         toAddLib.add_books( toAddBooks );
@@ -193,11 +198,17 @@ int main()
 
     std::sort( libraries.begin(), libraries.end(), cmpLibstime );
     std::vector< Res >  finalRes;
-    
+    int cntResort = 0;
+     std::random_device rd;
+    std::mt19937 g(rd());
     while (  currentTime <  noOfDays && !libraries.empty() )
-    {   
+    {       
+        std::shuffle( libraries.begin(), libraries.end(),g );
+        cntResort++;
         auto selectedLib = libraries.front();
         libraries.erase( libraries.begin() );
+        if ( cntResort % 40 == 0  )
+            continue;
 
         int scannedBooks = 0;
         currentTime += selectedLib.Time_sign_up_process + 1;
@@ -226,7 +237,8 @@ int main()
         if ( !result.to_be_scanned.empty() )
             finalRes.push_back(result);
 
-        //std::sort( libraries.begin(), libraries.end(), cmpLibs );
+        // if( cntResort % 200 == 0 )
+        //     std::sort( libraries.begin(), libraries.end(), cmpLibs );
 
     }
     std::cout << finalRes.size() << "\n";
