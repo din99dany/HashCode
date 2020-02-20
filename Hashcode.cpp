@@ -1,9 +1,15 @@
 #include <iostream>
+#include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <cmath>
 #include <vector>
 #include <utility> 
+#include <numeric>
+#include<cstdio>
+
+
+int viz[100005];
 
 class Book
 {
@@ -32,12 +38,14 @@ public:
 
 class Library
 {
+public:
+
     int Number_of_books;
     int Time_sign_up_process;
     int Books_shipped;
     std::vector<Book> Books;
 
-    Library(){}
+    Library() {}
 
     Library(int number_books, int time_sign_up, int number_books_ship)
     {
@@ -50,6 +58,20 @@ class Library
     {
         Books = carti;
     }
+    
+    int get_score()
+    {
+        int Sum = 0;
+        int size = Books.size();
+        for (int i = 0; i < size; i++)
+        {
+            if (viz[Books[i].m_id] != 1)
+            {
+                Sum = Sum + Books[i].m_score;
+            }
+        }
+        return Sum;
+    }
 
 };
 
@@ -60,7 +82,7 @@ public:
     int Nr_books;
     std::vector<int> to_be_scanned;
 
-    Res(){}
+    Res() {}
     Res(int id, int nr)
     {
         IDs = id;
@@ -73,9 +95,40 @@ public:
     }
 };
 
-std::vector<Res> Rezultate;
 
 int main()
 {
+    int noOfBooks, noOfLibraries, noOfDays;
+    std::cin >> noOfBooks >> noOfLibraries >> noOfDays;
+
+    std::vector<Book> books;
+    std::vector<Library> libraries;
+
+    for (int i = 0; i < noOfBooks; ++i)
+    {
+        int score;
+        std::cin >> score;
+        books.push_back(Book(score, i));
+    }
+
+    for (int i = 0; i < noOfLibraries; ++i)
+    {
+        int x, y, z;
+        std::cin >> x >> y >> z;
+        Library toAddLib(x, y, z);
+
+        std::vector< Book > toAddBooks;
+        for (int j = 0; j < x; ++j)
+        {
+            int idToAdd;
+            std::cin >> idToAdd;
+            toAddBooks.push_back(books[idToAdd]);
+        }
+        toAddLib.add_books(toAddBooks);
+        libraries.push_back(toAddLib);
+    }
+
+
+
     return 0;
 }
