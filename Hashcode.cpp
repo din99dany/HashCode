@@ -95,6 +95,27 @@ public:
     }
 };
 
+void marchez_carti(Library x, int timp_ramas)
+{
+    int zile_scanare = x.Number_of_books / x.Books_shipped;
+    if (zile_scanare < timp_ramas)
+    {
+        int size = x.Books.size();
+        for (int i = 0; i < size; i++)
+        {
+            viz[x.Books[i].m_id] = 1;
+        }
+    }
+    else
+    {
+        int size = x.Books.size();
+        for (int i = 0; i < x.Books_shipped*timp_ramas; i++)
+        {
+            viz[x.Books[i].m_id] = 1;
+        }
+    }
+}
+
 
 int main()
 {
