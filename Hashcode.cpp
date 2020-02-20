@@ -98,28 +98,42 @@ std::vector<Book> marchez_carti(Library x, int timp_ramas)
 {
     int zile_scanare;
     std::vector<Book> carti_trimise;
+    std::vector<Book> ship;
+    int number_to_be_shipped = 0;
+    int size = x.Books.size();
 
-    if(x.Number_of_books / x.Books_shipped ==0)
-        zile_scanare = x.Number_of_books / x.Books_shipped;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (viz[x.Books[i].m_id] == 0)
+        {
+            number_to_be_shipped++;
+            ship.push_back(x.Books[i]);
+        }
+
+    }
+
+
+    if(number_to_be_shipped/ x.Books_shipped ==0)
+        zile_scanare = number_to_be_shipped / x.Books_shipped;
     else
-        zile_scanare = x.Number_of_books / x.Books_shipped +1;
+        zile_scanare = number_to_be_shipped / x.Books_shipped +1;
 
 
     if (zile_scanare < timp_ramas)
     {
-        carti_trimise = x.Books;
-        int size = x.Books.size();
+        carti_trimise = ship;
         for (int i = 0; i < size; i++)
         {
-            viz[x.Books[i].m_id] = 1;
+            viz[ship[i].m_id] = 1;
         }
     }
     else
     {
         for (int i = 0; i < x.Books_shipped*timp_ramas; i++)
         {
-            carti_trimise.push_back(x.Books[i]);
-            viz[x.Books[i].m_id] = 1;
+            carti_trimise.push_back(ship[i]);
+            viz[ship[i].m_id] = 1;
         }
     }
     return carti_trimise;
