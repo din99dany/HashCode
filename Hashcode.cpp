@@ -3,8 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cmath>
-#include <vector>
-#include <utility> 
+#include <vector> 
 #include <numeric>
 #include<cstdio>
 
@@ -95,11 +94,20 @@ public:
     }
 };
 
-void marchez_carti(Library x, int timp_ramas)
+std::vector<Book> marchez_carti(Library x, int timp_ramas)
 {
-    int zile_scanare = x.Number_of_books / x.Books_shipped;
+    int zile_scanare;
+    std::vector<Book> carti_trimise;
+
+    if(x.Number_of_books / x.Books_shipped ==0)
+        zile_scanare = x.Number_of_books / x.Books_shipped;
+    else
+        zile_scanare = x.Number_of_books / x.Books_shipped +1;
+
+
     if (zile_scanare < timp_ramas)
     {
+        carti_trimise = x.Books;
         int size = x.Books.size();
         for (int i = 0; i < size; i++)
         {
@@ -108,12 +116,13 @@ void marchez_carti(Library x, int timp_ramas)
     }
     else
     {
-        int size = x.Books.size();
         for (int i = 0; i < x.Books_shipped*timp_ramas; i++)
         {
+            carti_trimise.push_back(x.Books[i]);
             viz[x.Books[i].m_id] = 1;
         }
     }
+    return carti_trimise;
 }
 
 
