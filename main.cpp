@@ -53,9 +53,28 @@ public:
         Books = carti;
     }
 
-
-
 };
+
+class Res
+{
+public:
+    int IDs;
+    int Nr_books;
+    std::vector<int> to_be_scanned;
+
+    Res(){}
+    Res(int id, int nr)
+    {
+        IDs = id;
+        Nr_books = nr;
+    }
+
+    void add_book(int id)
+    {
+        to_be_scanned.push_back(id);
+    }
+};
+
 
 int main()
 {
