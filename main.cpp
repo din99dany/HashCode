@@ -72,17 +72,31 @@ public:
         std::sort( Books.begin(), Books.end(), CmpBooks );
     }
 
-    int get_score()
+    double get_score()
     {
-        int Sum = 0;
+        std::vector<Book> ship;
         int size = Books.size();
+        int number_to_be_shipped = 0;
+
+
         for (int i = 0; i < size; i++)
         {
-            if (viz[Books[i].m_id] != 1)
+            if (viz[Books[i].m_id] == 0)
             {
-                Sum = Sum + Books[i].m_score;
+                number_to_be_shipped++;
+                ship.push_back(Books[i]);
             }
+
         }
+
+        double Sum = 0;
+        size = ship.size();
+        for (int i = 0; i < size; i++)
+        {
+             Sum = Sum + ship[i].m_score;
+        }
+
+        Sum = Sum / (number_to_be_shipped / Books_shipped + Time_sign_up_process);
         return Sum;
     }
 
@@ -92,6 +106,14 @@ bool cmpLibs( Library a, Library b )
 {
 
     if ( a.get_score() > b.get_score() )
+        return true;
+    return false;
+}
+
+bool cmpLibstime( Library a, Library b )
+{
+
+    if ( a.Time_sign_up_process < b.Time_sign_up_process )
         return true;
     return false;
 }
@@ -129,7 +151,6 @@ public:
         std::cout<<"\n";
     }
 };
-
 
 int main()
 {   
@@ -169,6 +190,8 @@ int main()
     }
 
     std::sort( libraries.begin(), libraries.end(), cmpLibs );
+
+    std::sort( libraries.begin(), libraries.end(), cmpLibstime );
     std::vector< Res >  finalRes;
     
     while (  currentTime <  noOfDays && !libraries.empty() )
@@ -198,11 +221,11 @@ int main()
             }  
             copyTime++;
         }
+
         
         if ( !result.to_be_scanned.empty() )
             finalRes.push_back(result);
 
-        //result.PrintRes();
         //std::sort( libraries.begin(), libraries.end(), cmpLibs );
 
     }
