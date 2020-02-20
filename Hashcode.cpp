@@ -114,7 +114,7 @@ std::vector<Book> marchez_carti(Library x, int timp_ramas)
     }
 
 
-    if(number_to_be_shipped/ x.Books_shipped ==0)
+    if((number_to_be_shipped/ x.Books_shipped)%10== number_to_be_shipped / x.Books_shipped)
         zile_scanare = number_to_be_shipped / x.Books_shipped;
     else
         zile_scanare = number_to_be_shipped / x.Books_shipped +1;
