@@ -58,17 +58,31 @@ public:
         Books = carti;
     }
     
-    int get_score()
+    double get_score()
     {
-        int Sum = 0;
+        std::vector<Book> ship;
         int size = Books.size();
+        int number_to_be_shipped = 0;
+
+
         for (int i = 0; i < size; i++)
         {
-            if (viz[Books[i].m_id] != 1)
+            if (viz[Books[i].m_id] == 0)
             {
-                Sum = Sum + Books[i].m_score;
+                number_to_be_shipped++;
+                ship.push_back(Books[i]);
             }
+
         }
+
+        double Sum = 0;
+        size = ship.size();
+        for (int i = 0; i < size; i++)
+        {
+             Sum = Sum + ship[i].m_score;
+        }
+
+        Sum = Sum / (number_to_be_shipped / Books_shipped + Time_sign_up_process);
         return Sum;
     }
 
@@ -114,7 +128,7 @@ std::vector<Book> marchez_carti(Library x, int timp_ramas)
     }
 
 
-    if((number_to_be_shipped/ x.Books_shipped)%10== number_to_be_shipped / x.Books_shipped)
+    if( (double(number_to_be_shipped)/ x.Books_shipped)== number_to_be_shipped / x.Books_shipped)
         zile_scanare = number_to_be_shipped / x.Books_shipped;
     else
         zile_scanare = number_to_be_shipped / x.Books_shipped +1;
